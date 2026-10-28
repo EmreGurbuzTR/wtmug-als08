@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>P2P Veri Transferi - Mobil</title>
+<link rel="manifest" href="manifest.json">
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<style>
+  :root { --bg:#0b1220; --surface:#151d2f; --border:#2a3448; --text:#e7ecf5; --muted:#8f9bb3; --accent:#4ade80; --blue:#60a5fa; --danger:#f87171; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:sans-serif; display:flex; flex-direction:column; height:100dvh; overflow:hidden; }
+  header { padding:15px; background:#16213a; border-bottom:1px solid var(--border); text-align:center; font-weight:bold; font-size:18px; }
+  
+  .container { flex:1; display:flex; flex-direction:column; padding:15px; width:100%; box-sizing:border-box; }
+  
+  /* QR Tarayıcı Ekranı */
+  #scannerScreen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
+  #videoContainer { position:relative; width:100%; max-width:400px; aspect-ratio:1/1; border-radius:12px; overflow:hidden; border:2px solid var(--border); margin-bottom:15px; }
+  video { width:100%; height:100%; object-fit:cover; }
+  .scan-overlay { position:absolute; inset:15%; border:2px solid var(--accent); border-radius:10px; box-shadow:0 0 0 9999px rgba(0,0,0,0.6); }
+  .status-badge { padding:8px 15px; border-radius:20px; background:var(--surface); border:1px solid var(--border); font-size:13px; color:var(--blue); text-align:center; }
+  
+  /* Transfer Ekranı */
+  #transferScreen { display:none; flex-direction:column; height:100%; }
+  .connected-info { text-align:center; color:var(--accent); margin-bottom:10px; font-weight:bold; font-size:13px; }
+  
+  .chat-box { flex:1; background:#080b13; border:1px solid var(--border); border-radius:10px; padding:10px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+  .msg { padding:8px 12px; border-radius:8px; max-width:85%; font-size:14px; word-wrap:break-word; position:relative; }
+  .msg.sent { background:var(--blue); color:#000; align-self:flex-end; border-bottom-right-radius:0; }
+  .msg.received { background:var(--surface); border:1px solid var(--border); align-self:flex-start; border-bottom-left-radius:0; }
+  .msg img { max-width:100%; max-height:150px; border-radius:6px; margin-top:5px; display:block; }
+  .msg a { color:inherit; text-decoration:underline; font-weight:bold; display:block; margin-top:5px; }
+  
+  .controls { display:flex; gap:6px; }
+  .controls input[type="text"] { flex:1; padding:12px; background:var(--surface); border:1px solid var(--border); color:white; border-radius:8px; font-size:16px; }
+  .controls button { padding:0 15px; border:0; border-radius:8px; font-weight:bold; cursor:pointer; }
+  .btn-send { background:var(--accent); color:#000; }
+  .btn-file { background:var(--surface); border:1px solid var(--border); color:white; font-size:18px; }
+  .progress-bar { display:none; height:4px; background:var(--border); border-radius:2px; margin-bottom:10px; overflow:hidden; }
+  .progress-bar div { height:100%; background:var(--accent); width:0%; transition:width 0.2s; }
+</style>
+</head>
+<body>
+
+<header>📱 Mobil Arayüz</header>
+
+<div class="container">
+  <!-- QR Tarayıcı Ekranı -->
+  <div id="scannerScreen">
+    <div id="videoContainer">
+      <video id="video" playsinline autoplay muted></video>
+      <div class="scan-overlay"></div>
+    </div>
+    <div class="status-badge" id="mobileStatus">Kamera Başlatılıyor...</div>
+  </div>
+
+  <!-- Transfer Ekranı -->
+  <div id="transferScreen">
+    <div class="connected-info">✅ Bilgisayara Bağlandı (Uçtan Uca Şifreli)</div>
+    
+    <div class="chat-box" id="chatBox">
+      <!-- Mesajlar buraya -->
+    </div>
+    
+    <div class="progress-bar" id="progressBar"><div id="progressFill"></div></div>
+    
+    <div class="controls">
+      <button class="btn-file" onclick="document.getElementById('fileInput').click()">📎</button>
+      <input type="file" id="fileInput" style="display:none" onchange="handleFileSelect(this)">
+      <input type="text" id="msgInput" placeholder="Mesaj yaz..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button class="btn-send" onclick="sendMessage()">Gönder</button>
+    </div>
+  </div>
+</div>
+
+<script src="mobile.js"></script>
+</body>
+</html>

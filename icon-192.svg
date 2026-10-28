@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="42" fill="#0b1220"/>
+  <rect x="14" y="14" width="164" height="164" rx="34" fill="none" stroke="url(#g)" stroke-width="4"/>
+  
+  <!-- Sol Cihaz (Bilgisayar) -->
+  <rect x="36" y="60" width="40" height="30" rx="4" fill="none" stroke="#4ade80" stroke-width="5"/>
+  <rect x="48" y="90" width="16" height="6" fill="#4ade80"/>
+  <rect x="40" y="96" width="32" height="4" rx="2" fill="#4ade80"/>
+
+  <!-- Sağ Cihaz (Telefon) -->
+  <rect x="116" y="50" width="28" height="50" rx="6" fill="none" stroke="#60a5fa" stroke-width="5"/>
+  <circle cx="130" cy="88" r="3" fill="#60a5fa"/>
+
+  <!-- Bağlantı Okları -->
+  <path d="M 86 75 L 106 75" fill="none" stroke="#e7ecf5" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 100 70 L 106 75 L 100 80" fill="none" stroke="#e7ecf5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <path d="M 106 85 L 86 85" fill="none" stroke="#e7ecf5" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 92 80 L 86 85 L 92 90" fill="none" stroke="#e7ecf5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
