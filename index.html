@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -14,13 +14,13 @@
   
   .container { flex:1; display:flex; flex-direction:column; padding:20px; max-width:800px; margin:0 auto; width:100%; box-sizing:border-box; }
   
-  /* QR Ekranı */
+  /* QR EkranÄ± */
   #qrScreen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
   #qrArea { background:white; padding:20px; border-radius:12px; margin-bottom:20px; }
   .instruction { font-size:16px; color:var(--muted); margin-bottom:10px; text-align:center; }
   .status-badge { padding:6px 12px; border-radius:20px; background:var(--surface); border:1px solid var(--border); font-size:13px; color:var(--blue); }
   
-  /* Transfer Ekranı */
+  /* Transfer EkranÄ± */
   #transferScreen { display:none; flex-direction:column; height:100%; }
   .connected-info { text-align:center; color:var(--accent); margin-bottom:15px; font-weight:bold; font-size:14px; }
   
@@ -42,19 +42,19 @@
 </head>
 <body>
 
-<header>💻 Bilgisayar Arayüzü</header>
+<header>ğŸ’» Bilgisayar ArayÃ¼zÃ¼</header>
 
 <div class="container">
-  <!-- Başlangıç (QR) Ekranı -->
+  <!-- BaÅŸlangÄ±Ã§ (QR) EkranÄ± -->
   <div id="qrScreen">
     <div class="instruction">Telefonunuzdan bu QR kodu okutun</div>
-    <div id="qrArea">QR Yükleniyor...</div>
-    <div class="status-badge" id="pcStatus">Sunucuya Bağlanılıyor...</div>
+    <div id="qrArea">QR YÃ¼kleniyor...</div>
+    <div class="status-badge" id="pcStatus">Sunucuya BaÄŸlanÄ±lÄ±yor...</div>
   </div>
 
-  <!-- Transfer Ekranı -->
+  <!-- Transfer EkranÄ± -->
   <div id="transferScreen">
-    <div class="connected-info">✅ Cihaz Bağlandı (Uçtan Uca Şifreli)</div>
+    <div class="connected-info">âœ… Cihaz BaÄŸlandÄ± (UÃ§tan Uca Åifreli)</div>
     
     <div class="chat-box" id="chatBox">
       <!-- Mesajlar buraya -->
@@ -63,10 +63,10 @@
     <div class="progress-bar" id="progressBar"><div id="progressFill"></div></div>
     
     <div class="controls">
-      <button class="btn-file" onclick="document.getElementById('fileInput').click()">📎</button>
+      <button class="btn-file" onclick="document.getElementById('fileInput').click()">ğŸ“</button>
       <input type="file" id="fileInput" style="display:none" onchange="handleFileSelect(this)">
-      <input type="text" id="msgInput" placeholder="Bir mesaj yazın..." onkeypress="if(event.key==='Enter') sendMessage()">
-      <button class="btn-send" onclick="sendMessage()">Gönder</button>
+      <input type="text" id="msgInput" placeholder="Bir mesaj yazÄ±n..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button class="btn-send" onclick="sendMessage()">GÃ¶nder</button>
     </div>
   </div>
 </div>

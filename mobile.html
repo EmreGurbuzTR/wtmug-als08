@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -14,14 +14,14 @@
   
   .container { flex:1; display:flex; flex-direction:column; padding:15px; width:100%; box-sizing:border-box; }
   
-  /* QR Tarayıcı Ekranı */
+  /* QR TarayÄ±cÄ± EkranÄ± */
   #scannerScreen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
   #videoContainer { position:relative; width:100%; max-width:400px; aspect-ratio:1/1; border-radius:12px; overflow:hidden; border:2px solid var(--border); margin-bottom:15px; }
   video { width:100%; height:100%; object-fit:cover; }
   .scan-overlay { position:absolute; inset:15%; border:2px solid var(--accent); border-radius:10px; box-shadow:0 0 0 9999px rgba(0,0,0,0.6); }
   .status-badge { padding:8px 15px; border-radius:20px; background:var(--surface); border:1px solid var(--border); font-size:13px; color:var(--blue); text-align:center; }
   
-  /* Transfer Ekranı */
+  /* Transfer EkranÄ± */
   #transferScreen { display:none; flex-direction:column; height:100%; }
   .connected-info { text-align:center; color:var(--accent); margin-bottom:10px; font-weight:bold; font-size:13px; }
   
@@ -43,21 +43,21 @@
 </head>
 <body>
 
-<header>📱 Mobil Arayüz</header>
+<header>ğŸ“± Mobil ArayÃ¼z</header>
 
 <div class="container">
-  <!-- QR Tarayıcı Ekranı -->
+  <!-- QR TarayÄ±cÄ± EkranÄ± -->
   <div id="scannerScreen">
     <div id="videoContainer">
       <video id="video" playsinline autoplay muted></video>
       <div class="scan-overlay"></div>
     </div>
-    <div class="status-badge" id="mobileStatus">Kamera Başlatılıyor...</div>
+    <div class="status-badge" id="mobileStatus">Kamera BaÅŸlatÄ±lÄ±yor...</div>
   </div>
 
-  <!-- Transfer Ekranı -->
+  <!-- Transfer EkranÄ± -->
   <div id="transferScreen">
-    <div class="connected-info">✅ Bilgisayara Bağlandı (Uçtan Uca Şifreli)</div>
+    <div class="connected-info">âœ… Bilgisayara BaÄŸlandÄ± (UÃ§tan Uca Åifreli)</div>
     
     <div class="chat-box" id="chatBox">
       <!-- Mesajlar buraya -->
@@ -66,10 +66,10 @@
     <div class="progress-bar" id="progressBar"><div id="progressFill"></div></div>
     
     <div class="controls">
-      <button class="btn-file" onclick="document.getElementById('fileInput').click()">📎</button>
+      <button class="btn-file" onclick="document.getElementById('fileInput').click()">ğŸ“</button>
       <input type="file" id="fileInput" style="display:none" onchange="handleFileSelect(this)">
       <input type="text" id="msgInput" placeholder="Mesaj yaz..." onkeypress="if(event.key==='Enter') sendMessage()">
-      <button class="btn-send" onclick="sendMessage()">Gönder</button>
+      <button class="btn-send" onclick="sendMessage()">GÃ¶nder</button>
     </div>
   </div>
 </div>

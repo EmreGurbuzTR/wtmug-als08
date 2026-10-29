@@ -1,4 +1,4 @@
-const CACHE = 'p2p-share-v2'; // Sürümü artırdık
+﻿const CACHE = 'p2p-share-v2'; // Sürümü artırdık
 const PRECACHE = [
   './', 
   './index.html', 

@@ -1,8 +1,8 @@
-let peer = null;
+﻿let peer = null;
 let conn = null;
 let qrScannerActive = true;
 
-// Sayfa yüklendiğinde kamerayı ve QR tarayıcıyı başlat
+// Sayfa yÃ¼klendiÄŸinde kamerayÄ± ve QR tarayÄ±cÄ±yÄ± baÅŸlat
 async function initScanner() {
   const status = document.getElementById('mobileStatus');
   try {
@@ -12,14 +12,14 @@ async function initScanner() {
     video.setAttribute('playsinline', true);
     video.play();
     requestAnimationFrame(tick);
-    status.innerText = "QR Kod Aranıyor...";
+    status.innerText = "QR Kod AranÄ±yor...";
   } catch (err) {
-    status.innerText = "Kamera Hatası: " + err.message;
+    status.innerText = "Kamera HatasÄ±: " + err.message;
     status.style.color = "var(--danger)";
   }
 }
 
-// QR Tarama Döngüsü
+// QR Tarama DÃ¶ngÃ¼sÃ¼
 function tick() {
   if (!qrScannerActive) return;
   
@@ -37,15 +37,15 @@ function tick() {
     if (code) {
       // QR bulundu!
       qrScannerActive = false;
-      document.getElementById('mobileStatus').innerText = "Bağlanılıyor...";
-      connectToDesktop(code.data); // QR içindeki Peer ID
+      document.getElementById('mobileStatus').innerText = "BaÄŸlanÄ±lÄ±yor...";
+      connectToDesktop(code.data); // QR iÃ§indeki Peer ID
       return;
     }
   }
   requestAnimationFrame(tick);
 }
 
-// Bilgisayara Bağlan
+// Bilgisayara BaÄŸlan
 function connectToDesktop(peerId) {
   peer = new Peer();
   
@@ -53,10 +53,10 @@ function connectToDesktop(peerId) {
     conn = peer.connect(peerId);
     
     conn.on('open', () => {
-      // Bağlantı başarılı, ekranı değiştir
+      // BaÄŸlantÄ± baÅŸarÄ±lÄ±, ekranÄ± deÄŸiÅŸtir
       document.getElementById('scannerScreen').style.display = 'none';
       document.getElementById('transferScreen').style.display = 'flex';
-      // Kamerayı kapat
+      // KamerayÄ± kapat
       const video = document.getElementById('video');
       if (video.srcObject) {
         video.srcObject.getTracks().forEach(t => t.stop());
@@ -65,7 +65,7 @@ function connectToDesktop(peerId) {
 
     conn.on('data', (data) => {
       if (data.type === 'text') {
-        addMessage('Karşı Taraf', data.content);
+        addMessage('KarÅŸÄ± Taraf', data.content);
       } 
       else if (data.type === 'file-start') {
         window.incomingFile = { name: data.name, size: data.size, mime: data.mime, chunks: data.chunks };
@@ -87,9 +87,9 @@ function connectToDesktop(peerId) {
           if (window.incomingFile.mime.startsWith('image/')) {
             html = `<img src="${url}">`;
           } else {
-            html = `<a href="${url}" download="${window.incomingFile.name}">📄 ${window.incomingFile.name} (İndir)</a>`;
+            html = `<a href="${url}" download="${window.incomingFile.name}">ğŸ“„ ${window.incomingFile.name} (Ä°ndir)</a>`;
           }
-          addMessage('Karşı Taraf', html, true);
+          addMessage('KarÅŸÄ± Taraf', html, true);
           pb.style.display = 'none';
         }
       }
@@ -97,7 +97,7 @@ function connectToDesktop(peerId) {
   });
 }
 
-// Metin Gönderme
+// Metin GÃ¶nderme
 function sendMessage() {
   const input = document.getElementById('msgInput');
   const text = input.value.trim();
@@ -108,7 +108,7 @@ function sendMessage() {
   }
 }
 
-// Dosya Gönderme
+// Dosya GÃ¶nderme
 function handleFileSelect(input) {
   const file = input.files[0];
   if (!file || !conn || !conn.open) return;
@@ -134,7 +134,7 @@ function handleFileSelect(input) {
   if (file.type.startsWith('image/')) {
     html = `<img src="${previewUrl}">`;
   } else {
-    html = `<a href="${previewUrl}" download="${file.name}">📄 ${file.name} (Gönderildi)</a>`;
+    html = `<a href="${previewUrl}" download="${file.name}">ğŸ“„ ${file.name} (GÃ¶nderildi)</a>`;
   }
   addMessage('Ben', html, true);
 
@@ -174,5 +174,5 @@ function addMessage(sender, content, isHtml = false) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Başlat
+// BaÅŸlat
 initScanner();

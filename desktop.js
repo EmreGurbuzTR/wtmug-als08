@@ -1,21 +1,21 @@
-let peer = null;
+﻿let peer = null;
 let conn = null;
 
-// Sunucuya (PeerJS) bağlan ve rastgele bir ID al
+// Sunucuya (PeerJS) baÄŸlan ve rastgele bir ID al
 function initPeer() {
   peer = new Peer();
   
   peer.on('open', (id) => {
-    document.getElementById('pcStatus').innerText = "Hazır (ID: " + id + ")";
+    document.getElementById('pcStatus').innerText = "HazÄ±r (ID: " + id + ")";
     
-    // QR Kod Üret
+    // QR Kod Ãœret
     const qr = qrcode(0, 'M');
-    qr.addData(id); // QR içine sadece Peer ID'yi gömüyoruz
+    qr.addData(id); // QR iÃ§ine sadece Peer ID'yi gÃ¶mÃ¼yoruz
     qr.make();
     document.getElementById('qrArea').innerHTML = qr.createImgTag(6, 0);
   });
 
-  // Telefon bağlandığında
+  // Telefon baÄŸlandÄ±ÄŸÄ±nda
   peer.on('connection', (connection) => {
     conn = connection;
     setupConnection();
@@ -26,33 +26,33 @@ function setupConnection() {
   document.getElementById('qrScreen').style.display = 'none';
   document.getElementById('transferScreen').style.display = 'flex';
   
-  // Bağlantı kapandığında
+  // BaÄŸlantÄ± kapandÄ±ÄŸÄ±nda
   conn.on('close', () => {
-    alert("Bağlantı kesildi!");
+    alert("BaÄŸlantÄ± kesildi!");
     location.reload();
   });
 
   conn.on('data', (data) => {
-    // Metin mesajı geldiyse
+    // Metin mesajÄ± geldiyse
     if (data.type === 'text') {
-      addMessage('Karşı Taraf', data.content);
+      addMessage('KarÅŸÄ± Taraf', data.content);
     } 
-    // Dosya başlangıcı geldiyse
+    // Dosya baÅŸlangÄ±cÄ± geldiyse
     else if (data.type === 'file-start') {
       window.incomingFile = { name: data.name, size: data.size, mime: data.mime, chunks: data.chunks };
       window.receivedChunks = [];
     } 
-    // Dosya parçası geldiyse
+    // Dosya parÃ§asÄ± geldiyse
     else if (data.type === 'file-chunk') {
       window.receivedChunks.push(data.data);
       
-      // İlerleme çubuğu
+      // Ä°lerleme Ã§ubuÄŸu
       let percent = Math.round((window.receivedChunks.length / window.incomingFile.chunks) * 100);
       let pb = document.getElementById('progressBar');
       pb.style.display = 'block';
       document.getElementById('progressFill').style.width = percent + '%';
 
-      // Tüm parçalar tamamlandıysa
+      // TÃ¼m parÃ§alar tamamlandÄ±ysa
       if (window.receivedChunks.length === window.incomingFile.chunks) {
         const blob = new Blob(window.receivedChunks, { type: window.incomingFile.mime });
         const url = URL.createObjectURL(blob);
@@ -61,17 +61,17 @@ function setupConnection() {
         if (window.incomingFile.mime.startsWith('image/')) {
           html = `<img src="${url}" onclick="window.open('${url}')">`;
         } else {
-          html = `<a href="${url}" download="${window.incomingFile.name}">📄 ${window.incomingFile.name} (İndir)</a>`;
+          html = `<a href="${url}" download="${window.incomingFile.name}">ğŸ“„ ${window.incomingFile.name} (Ä°ndir)</a>`;
         }
         
-        addMessage('Karşı Taraf', html, true);
+        addMessage('KarÅŸÄ± Taraf', html, true);
         pb.style.display = 'none';
       }
     }
   });
 }
 
-// Metin Gönderme
+// Metin GÃ¶nderme
 function sendMessage() {
   const input = document.getElementById('msgInput');
   const text = input.value.trim();
@@ -82,20 +82,20 @@ function sendMessage() {
   }
 }
 
-// Dosya Gönderme
+// Dosya GÃ¶nderme
 function handleFileSelect(input) {
   const file = input.files[0];
   if (!file || !conn || !conn.open) return;
-  input.value = ''; // Sıfırla
+  input.value = ''; // SÄ±fÄ±rla
 
-  const CHUNK_SIZE = 16 * 1024; // 16 KB parçalar
+  const CHUNK_SIZE = 16 * 1024; // 16 KB parÃ§alar
   const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
   
   const reader = new FileReader();
   let offset = 0;
   let chunkIndex = 0;
 
-  // Başlangıç bilgisini yolla
+  // BaÅŸlangÄ±Ã§ bilgisini yolla
   conn.send({
     type: 'file-start',
     name: file.name,
@@ -104,17 +104,17 @@ function handleFileSelect(input) {
     chunks: totalChunks
   });
 
-  // Önizleme için URL oluştur
+  // Ã–nizleme iÃ§in URL oluÅŸtur
   const previewUrl = URL.createObjectURL(file);
   let html = '';
   if (file.type.startsWith('image/')) {
     html = `<img src="${previewUrl}" onclick="window.open('${previewUrl}')">`;
   } else {
-    html = `<a href="${previewUrl}" download="${file.name}">📄 ${file.name} (Gönderildi)</a>`;
+    html = `<a href="${previewUrl}" download="${file.name}">ğŸ“„ ${file.name} (GÃ¶nderildi)</a>`;
   }
   addMessage('Ben', html, true);
 
-  // Parçaları oku ve gönder
+  // ParÃ§alarÄ± oku ve gÃ¶nder
   function readNextChunk() {
     const slice = file.slice(offset, offset + CHUNK_SIZE);
     reader.readAsArrayBuffer(slice);
@@ -131,7 +131,7 @@ function handleFileSelect(input) {
     offset += CHUNK_SIZE;
     chunkIndex++;
     
-    // İlerleme çubuğu
+    // Ä°lerleme Ã§ubuÄŸu
     let pb = document.getElementById('progressBar');
     pb.style.display = 'block';
     document.getElementById('progressFill').style.width = Math.round((chunkIndex / totalChunks) * 100) + '%';
@@ -146,7 +146,7 @@ function handleFileSelect(input) {
   readNextChunk();
 }
 
-// Arayüze mesaj ekleme
+// ArayÃ¼ze mesaj ekleme
 function addMessage(sender, content, isHtml = false) {
   const chatBox = document.getElementById('chatBox');
   const div = document.createElement('div');
@@ -157,5 +157,5 @@ function addMessage(sender, content, isHtml = false) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Başlat
+// BaÅŸlat
 initPeer();
